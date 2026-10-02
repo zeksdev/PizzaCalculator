@@ -3,3 +3,6 @@ dist
 *.tsbuildinfo
 .DS_Store
 .idea
+
+# Third-party source recipe, kept locally only
+docs/pizza-workshop.pdf

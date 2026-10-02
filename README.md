@@ -50,4 +50,4 @@ The recipe steps use placeholder photos in `public/recept/korak-1.jpg` … `kora
 
 ## License
 
-The code is licensed under the [MIT License](LICENSE). This doesn't cover `docs/pizza-workshop.pdf`, a third-party workshop handout kept only as the reference for the default recipe values. Its copyright stays with its authors.
+[MIT](LICENSE)

@@ -27,7 +27,7 @@ Every push to `main` runs `.github/workflows/deploy.yml`, which tests, builds an
 
 - `CONTEXT.md` is the domain glossary: Batch, Dough ball, Ball weight, Baker's percentage, Hydration, Yeast type, Recommended yeast percentage, Proofing schedule, Cold/Room proof, Quantities, Recipe. Use these terms in code, tests and issues, and avoid the synonyms listed under each term's _Avoid_ line. Each term also lists the Serbian label used in the UI.
 - `docs/adr/` holds the decision records. **ADR 0001: Ball weight excludes yeast.** Flour = balls × ballWeight ÷ (1 + hydration + salt), and yeast is added on top. This is intentional; don't "fix" it.
-- `docs/pizza-workshop.pdf` is the source recipe the defaults come from. Its numbers are used, but its text and branding are not.
+- The defaults come from a third-party workshop handout. It isn't in the repo (it may exist locally as the git-ignored `docs/pizza-workshop.pdf`). Only its numbers are used, never its text or branding; the numbers are listed under Key constraints.
 
 ## Key constraints
 
