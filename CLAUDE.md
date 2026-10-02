@@ -2,10 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Status
-
-v1 is implemented per the GitHub Issues on `zeksdev/PizzaCalculator`: **#1** is the parent spec (Pizza Dough Calculator PWA v1) and **#2–#8** are its vertical-slice tickets. Read #1 before changing behaviour.
-
 ## Commands
 
 - `npm install`: install dependencies
@@ -33,7 +29,7 @@ Every push to `main` runs `.github/workflows/deploy.yml`, which tests, builds an
 - `docs/adr/` holds the decision records. **ADR 0001: Ball weight excludes yeast.** Flour = balls × ballWeight ÷ (1 + hydration + salt), and yeast is added on top. This is intentional; don't "fix" it.
 - `docs/pizza-workshop.pdf` is the source recipe the defaults come from. Its numbers are used, but its text and branding are not.
 
-## Key constraints (from #1)
+## Key constraints
 
 - React + Vite + TypeScript PWA, deployed to GitHub Pages from `main`. No backend.
 - UI language is Serbian, Latin script only, with decimal commas. All UI text lives in one strings module.
