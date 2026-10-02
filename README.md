@@ -8,6 +8,12 @@ It's an installable PWA that works offline after the first visit. On a phone, op
 
 The defaults reproduce the source recipe: 6 × 280 g, instant dry yeast, 72h proofing → 1000 g flour, 650 g water, 30 g salt, 1 g yeast.
 
+<p>
+  <img src="docs/screenshots/kalkulator.png" alt="Calculator: dough balls, ball weight, yeast type and proofing schedule" width="260">
+  <img src="docs/screenshots/kolicine.png" alt="Quantities: grams and baker's percentages for flour, water, salt and yeast, plus the proofing timeline" width="260">
+  <img src="docs/screenshots/recept.png" alt="Recipe: illustrated dough steps" width="260">
+</p>
+
 ## Development
 
 Requires Node 24.
