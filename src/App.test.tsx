@@ -336,9 +336,14 @@ describe('Remembering inputs', () => {
       ballCount: 6, ballWeightGrams: 280, yeastType: 'sourdough', proofingSchedule: '72h',
       yeastPercent: 0.1, hydrationPercent: 65, saltPercent: 3,
     })],
-  ])('falls back to the defaults when the stored data is %s', (_, stored) => {
-    localStorage.setItem('moja-pizza.inputs.v1', stored);
-    setup();
+  ])('falls back to the defaults when the stored data is %s', async (_, stored) => {
+    // Use the app once so it stores its inputs, then corrupt whatever it stored.
+    const { user } = setup();
+    await user.click(screen.getByRole('button', { name: 'Više loptica' }));
+    cleanup();
+    for (const key of Object.keys(localStorage)) localStorage.setItem(key, stored);
+
+    render(<App />);
     expectDefaults();
   });
 
@@ -420,7 +425,7 @@ describe('Podeli', () => {
     '4 loptice × 260 g',
     'Fermentacija: Isti dan (8h ukupno)',
     '',
-    'Brašno: 619 g (100%)',
+    'Brašno (min. 12% proteina): 619 g (100%)',
     'Voda: 402 g (65%)',
     'So: 18,6 g (3%)',
     'Sveži kvasac: 3,71 g (0,6%)',
@@ -449,6 +454,28 @@ describe('Podeli', () => {
     await user.click(screen.getByRole('button', { name: 'Podeli' }));
 
     expect(share).toHaveBeenCalledWith({ title: 'Testo za picu', text: sveziIstiDan4x260 });
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it('falls back to the clipboard when the share sheet fails', async () => {
+    const share = vi.fn().mockRejectedValue(new DOMException('Share failed', 'NotAllowedError'));
+    Object.defineProperty(navigator, 'share', { value: share, configurable: true });
+    const { user } = setup();
+    await quantitiesFor4x260SveziIstiDan(user);
+    await user.click(screen.getByRole('button', { name: 'Podeli' }));
+
+    expect(await screen.findByRole('status')).toHaveTextContent('Količine su kopirane u klipbord');
+    expect(await navigator.clipboard.readText()).toBe(sveziIstiDan4x260);
+  });
+
+  it('does nothing more when the share sheet is dismissed', async () => {
+    const share = vi.fn().mockRejectedValue(new DOMException('Share canceled', 'AbortError'));
+    Object.defineProperty(navigator, 'share', { value: share, configurable: true });
+    const { user } = setup();
+    await quantitiesFor4x260SveziIstiDan(user);
+    await user.click(screen.getByRole('button', { name: 'Podeli' }));
+
+    expect(share).toHaveBeenCalled();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
 

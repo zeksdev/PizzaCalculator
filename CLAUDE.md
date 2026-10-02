@@ -20,11 +20,11 @@ Every push to `main` runs `.github/workflows/deploy.yml`, which tests, builds an
 ## Code map
 
 - `src/dough/dough.ts`: the pure calculation module (formula, recommended yeast table, proofing timelines, defaults, limits)
-- `src/format.ts`: Serbian number formatting and input parsing
+- `src/format.ts`: Serbian number formatting and input parsing; `src/quantitiesText.ts`: Quantities lines and the share text
 - `src/strings.ts`: all UI text, plus the Serbian plural rule for ball counts
 - `src/useCalculator.ts`: calculator state, reset rules, clamping, persistence (`localStorage` key `moja-pizza.inputs.v1`)
 - `src/components/`: the design-system components; `src/screens/`: Calculator, Quantities, Recipe
-- `src/App.tsx`: app shell with hash routing (`#/`, `#/kolicine`, `#/recept`)
+- `src/App.tsx`: app shell; `src/routes.ts`: hash routes (`#/`, `#/kolicine`, `#/recept`)
 - `public/recept/korak-N.jpg`: recipe step photos (placeholders). Replace a file to swap its photo.
 
 ## Domain

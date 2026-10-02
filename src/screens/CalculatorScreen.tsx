@@ -5,12 +5,11 @@ import { FormSectionHeader } from '../components/SectionHeader';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { Stepper } from '../components/Stepper';
 import { LIMITS, PROOFING_SCHEDULES, proofingTimeline, recommendedYeastPercent, YEAST_TYPES } from '../dough/dough';
-import { formatPercent, formatPercentValue } from '../format';
+import { formatGrams, formatPercent, formatPercentValue } from '../format';
 import { strings } from '../strings';
 import type { Calculator } from '../useCalculator';
 
 const formatCount = (value: number) => String(value);
-const formatWeight = (value: number) => `${value} g`;
 
 export function CalculatorScreen({ calculator, onCalculate }: { calculator: Calculator; onCalculate: () => void }) {
   const { inputs, setNumber, setYeastType, setProofingSchedule, resetToDefaults } = calculator;
@@ -47,7 +46,7 @@ export function CalculatorScreen({ calculator, onCalculate }: { calculator: Calc
             label={strings.ballWeight}
             value={inputs.ballWeightGrams}
             limit={LIMITS.ballWeightGrams}
-            format={formatWeight}
+            format={formatGrams}
             formatEditable={formatCount}
             onChange={(v) => setNumber('ballWeightGrams', v)}
             decrementLabel={strings.ballWeightDecrement}

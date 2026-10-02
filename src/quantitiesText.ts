@@ -6,12 +6,13 @@ import { strings } from './strings';
 export function ingredientLines(inputs: DoughInputs) {
   const q = calculateQuantities(inputs);
   return [
-    { key: 'flour', name: strings.flour, amount: formatGrams(q.flourGrams), percent: formatPercent(100) },
-    { key: 'water', name: strings.water, amount: formatGrams(q.waterGrams), percent: formatPercent(inputs.hydrationPercent) },
-    { key: 'salt', name: strings.salt, amount: formatGrams(q.saltGrams, 1), percent: formatPercent(inputs.saltPercent) },
+    { key: 'flour', name: strings.flour, note: strings.flourNote, amount: formatGrams(q.flourGrams), percent: formatPercent(100) },
+    { key: 'water', name: strings.water, note: undefined, amount: formatGrams(q.waterGrams), percent: formatPercent(inputs.hydrationPercent) },
+    { key: 'salt', name: strings.salt, note: undefined, amount: formatGrams(q.saltGrams, 1), percent: formatPercent(inputs.saltPercent) },
     {
       key: 'yeast',
       name: strings.yeastIngredient(inputs.yeastType),
+      note: undefined,
       amount: formatGrams(q.yeastGrams, 2),
       percent: formatPercent(inputs.yeastPercent),
     },
@@ -29,7 +30,9 @@ export function shareText(inputs: DoughInputs): string {
     strings.shareBatch(inputs.ballCount, inputs.ballWeightGrams),
     strings.shareProofing(inputs.proofingSchedule, totalHours),
     '',
-    ...ingredientLines(inputs).map(({ name, amount, percent }) => `${name}: ${amount} (${percent})`),
+    ...ingredientLines(inputs).map(({ name, note, amount, percent }) =>
+      note ? `${name} (${note}): ${amount} (${percent})` : `${name}: ${amount} (${percent})`,
+    ),
     `${strings.totalDough}: ${totalDoughText(inputs)}`,
   ].join('\n');
 }

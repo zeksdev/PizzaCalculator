@@ -19,7 +19,8 @@ import { SummaryBar } from '../components/SummaryBar';
 import { Toast } from '../components/Toast';
 import { proofingTimeline, type DoughInputs } from '../dough/dough';
 import { formatGrams } from '../format';
-import { ingredientLines, shareText, totalDoughText } from '../shareText';
+import { ingredientLines, shareText, totalDoughText } from '../quantitiesText';
+import { ROUTES } from '../routes';
 import { ballCountLabel, strings } from '../strings';
 
 const ingredientIcons = {
@@ -46,10 +47,11 @@ export function QuantitiesScreen({ inputs }: { inputs: DoughInputs }) {
     if (typeof navigator.share === 'function') {
       try {
         await navigator.share({ title: strings.shareTitle, text });
-      } catch {
-        // Dismissing the share sheet is not an error worth reporting.
+        return;
+      } catch (error) {
+        // Dismissing the share sheet is the user's choice; any other failure falls back to the clipboard.
+        if (error instanceof DOMException && error.name === 'AbortError') return;
       }
-      return;
     }
     try {
       await navigator.clipboard.writeText(text);
@@ -61,7 +63,7 @@ export function QuantitiesScreen({ inputs }: { inputs: DoughInputs }) {
 
   return (
     <>
-      <Header title={strings.quantitiesTitle} backHref="#/" />
+      <Header title={strings.quantitiesTitle} backHref={ROUTES.calculator} />
       <SummaryBar
         items={[
           { icon: <TimerIcon size={19} />, text: strings.summaryProofing(timeline.totalHours) },
@@ -74,7 +76,7 @@ export function QuantitiesScreen({ inputs }: { inputs: DoughInputs }) {
           <ListSectionHeader
             id="ingredientsTitle"
             action={
-              <a className="text-action" href="#/">
+              <a className="text-action" href={ROUTES.calculator}>
                 <PencilIcon size={18} />
                 {strings.edit}
               </a>
@@ -84,12 +86,12 @@ export function QuantitiesScreen({ inputs }: { inputs: DoughInputs }) {
           </ListSectionHeader>
           <div className="list-card">
             <ul className="plain-list" aria-labelledby="ingredientsTitle">
-              {ingredientLines(inputs).map(({ key, name, amount, percent }) => (
+              {ingredientLines(inputs).map(({ key, name, note, amount, percent }) => (
                 <IngredientRow
                   key={key}
                   icon={ingredientIcons[key]}
                   name={name}
-                  note={key === 'flour' ? strings.flourNote : undefined}
+                  note={note}
                   amount={amount}
                   percent={percent}
                 />
@@ -124,7 +126,7 @@ export function QuantitiesScreen({ inputs }: { inputs: DoughInputs }) {
           <ShareIcon size={18} />
           {strings.share}
         </button>
-        <a className="button button--primary" href="#/recept">
+        <a className="button button--primary" href={ROUTES.recipe}>
           {strings.viewRecipe}
         </a>
       </div>

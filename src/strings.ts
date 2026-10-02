@@ -26,6 +26,7 @@ const proofingScheduleLabels: Record<ProofingSchedule, string> = {
 
 export const strings = {
   appName: 'Moja Pizza',
+  appDescription: 'Kalkulator testa za picu',
   resetDefaults: 'Vrati podrazumevane vrednosti',
   backToCalculator: 'Nazad na kalkulator',
   mainNavigation: 'Glavna navigacija',
@@ -81,7 +82,7 @@ export const strings = {
   share: 'Podeli',
   viewRecipe: 'Pogledaj recept',
   copiedToClipboard: 'Količine su kopirane u klipbord',
-  shareTitle: 'Testo za picu',
+  shareTitle: 'Testo za picu', // the share sheet title, same name as the Recipe
   shareBatch: (ballCount: number, ballWeightGrams: number) =>
     `${ballCountLabel(ballCount)} × ${formatGrams(ballWeightGrams)}`,
   shareProofing: (schedule: ProofingSchedule, totalHours: number) =>

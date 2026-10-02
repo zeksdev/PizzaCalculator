@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import { strings } from './src/strings';
 
 // GitHub Pages serves the app from /<repo>/.
 const base = '/PizzaCalculator/';
@@ -14,13 +15,14 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'recept/*.jpg'],
       manifest: {
-        name: 'Moja Pizza',
-        short_name: 'Moja Pizza',
-        description: 'Kalkulator testa za picu',
+        name: strings.appName,
+        short_name: strings.appName,
+        description: strings.appDescription,
         lang: 'sr-Latn',
         start_url: base,
         scope: base,
         display: 'standalone',
+        // The manifest can't read CSS custom properties: these are the surface-page and accent tokens.
         background_color: '#f2f2f0',
         theme_color: '#f2b630',
         icons: [

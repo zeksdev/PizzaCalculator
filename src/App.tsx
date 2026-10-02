@@ -3,16 +3,11 @@ import { TabBar } from './components/TabBar';
 import { CalculatorScreen } from './screens/CalculatorScreen';
 import { QuantitiesScreen } from './screens/QuantitiesScreen';
 import { RecipeScreen } from './screens/RecipeScreen';
+import { ROUTES, type Route } from './routes';
 import { useCalculator } from './useCalculator';
 
-type Route = 'calculator' | 'quantities' | 'recipe';
-
-const ROUTES: Record<string, Route> = {
-  '#/kolicine': 'quantities',
-  '#/recept': 'recipe',
-};
-
-const routeFromHash = (): Route => ROUTES[window.location.hash] ?? 'calculator';
+const routeFromHash = (): Route =>
+  (Object.keys(ROUTES) as Route[]).find((route) => ROUTES[route] === window.location.hash) ?? 'calculator';
 
 function useRoute(): Route {
   const [route, setRoute] = useState(routeFromHash);
@@ -34,7 +29,7 @@ export default function App() {
   return (
     <div className="app">
       {route === 'calculator' && (
-        <CalculatorScreen calculator={calculator} onCalculate={() => (window.location.hash = '#/kolicine')} />
+        <CalculatorScreen calculator={calculator} onCalculate={() => (window.location.hash = ROUTES.quantities)} />
       )}
       {route === 'quantities' && <QuantitiesScreen inputs={calculator.inputs} />}
       {route === 'recipe' && <RecipeScreen />}
