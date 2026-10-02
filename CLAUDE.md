@@ -4,13 +4,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Status
 
-No application code exists yet. The work is specified and broken down in GitHub Issues on `zeksdev/PizzaCalculator`:
+v1 is implemented per the GitHub Issues on `zeksdev/PizzaCalculator`: **#1** is the parent spec (Pizza Dough Calculator PWA v1) and **#2–#8** are its vertical-slice tickets. Read #1 before changing behaviour.
 
-- **#1** is the parent spec (Pizza Dough Calculator PWA v1). Read it before starting any ticket.
-- **#2–#8** are vertical-slice tickets, linked to #1 as sub-issues and to each other with GitHub's native "blocked by" relationships. **#2** (tracer bullet: scaffold, Calculator → Quantities, GitHub Pages deploy) must land first.
-- Ticket-ready issues carry the `ready-for-agent` label.
+## Commands
 
-Once #2 lands, add the build, test and single-test commands to this file.
+- `npm install`: install dependencies
+- `npm run dev`: dev server (served under `/PizzaCalculator/`)
+- `npm run typecheck`: TypeScript check
+- `npm test`: the full Vitest suite
+- `npx vitest run src/App.test.tsx`: a single test file (add `-t "<name>"` for a single test)
+- `npm run build`: typecheck + production build with the PWA service worker into `dist/`
+
+Every push to `main` runs `.github/workflows/deploy.yml`, which tests, builds and deploys to GitHub Pages.
+
+## Code map
+
+- `src/dough/dough.ts`: the pure calculation module (formula, recommended yeast table, proofing timelines, defaults, limits)
+- `src/format.ts`: Serbian number formatting and input parsing
+- `src/strings.ts`: all UI text, plus the Serbian plural rule for ball counts
+- `src/useCalculator.ts`: calculator state, reset rules, clamping, persistence (`localStorage` key `moja-pizza.inputs.v1`)
+- `src/components/`: the design-system components; `src/screens/`: Calculator, Quantities, Recipe
+- `src/App.tsx`: app shell with hash routing (`#/`, `#/kolicine`, `#/recept`)
+- `public/recept/korak-N.jpg`: recipe step photos (placeholders). Replace a file to swap its photo.
 
 ## Domain
 
