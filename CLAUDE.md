@@ -45,6 +45,20 @@ The system has no JS bundle; the app implements these components itself in React
 - Icons are inline 24×24 stroke SVGs using `currentColor`. Never emoji.
 - Use `aria-pressed` on segments and `aria-expanded` on the advanced-settings toggle. − / + at a limit get the `disabled` attribute, not just a color.
 
+## Screen designs
+
+Phone-size (390×844) reference screens are on the **Moja Pizza** design canvas: https://claude.ai/artifact/7to2mD2sG8p4eodhi3ErDX. Read them with the Artifact tool, starting with `project/canvas.json`; each screen is a `project/<Name>.dc.html` file. They are references for layout and copy, not code to copy: the inline hex values correspond to the design-system tokens.
+
+| Board | Shows |
+|---|---|
+| `Main` | Calculator: Testo (Broj loptica, Težina loptice), Vrsta kvasca, Fermentacija with a timeline caption, Napredna podešavanja collapsed with a summary line, sticky Izračunaj |
+| `Napredna` | Advanced settings expanded: section Procenti; yeast overridden (0,18% against the recommended 0,13%); salt at its 4% maximum with + disabled and the caption "Najviše 4%" |
+| `Kolicine` | Quantities at the defaults: back button, dark summary bar, Sastojci with Izmeni, an "Ukupno testo" total row (includes yeast, per ADR 0001), the Fermentacija timeline, and Podeli + Pogledaj recept |
+| `Podeli` | Quantities for Isti dan with Sveži yeast (4 × 260 g), plus the toast "Količine su kopirane u klipbord" |
+| `Recept` | "Testo za picu", the subtitle "8 koraka · količine i vreme fermentacije su u kalkulatoru", and 8 step cards with photo placeholders `korak-1.jpg` … `korak-8.jpg` |
+
+Counts use Serbian plural forms ("1 loptica", "4 loptice", "6 loptica"), so ball counts need a plural rule, not string concatenation.
+
 ## Architecture
 
 All dough math lives in a pure calculation module that doesn't depend on React. Screens only render its output and format the numbers.
